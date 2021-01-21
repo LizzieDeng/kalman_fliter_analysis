@@ -44,7 +44,7 @@ def KF_process_static_model(y_list):
         k = p_cov * H_T / (H * p_cov * H_T + R)
         x_state = x_state + k * (y - H * x_state)
         p_cov = (1 - k * H) * p_cov
-        true_value = 1 #true_value + 0.1
+        true_value = 1   # true_value + 0.1
         true_list.append(true_value)
         # 记录数据
         x_state_list.append(x_state)
