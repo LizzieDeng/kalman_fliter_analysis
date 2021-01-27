@@ -19,6 +19,7 @@ import math
 
 #################### Hilbert Curves ####################
 
+
 def hilbert(w, side, d, sp=10):
     """
     Draws a Hilbert curve of side-length side and depth d
