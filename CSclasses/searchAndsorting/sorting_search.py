@@ -27,7 +27,7 @@ def linear_search(v, b):
     # ############## method 3
     i = len(b) - 1
     while i >= 0 and b[i] != v:
-        i = i-1
+        i = i - 1
     return i
 
 
@@ -40,7 +40,7 @@ def binary_search(v, b):
     mid = (l + i) // 2
     while i < l:
         if v > b[mid]:
-            i = mid+1
+            i = mid + 1
         else:
             l = mid
         mid = (l + i) // 2
@@ -73,9 +73,9 @@ def buble_sort(b):
     while i < n:
         j = i
         while j > 0:
-            if b[j-1] > b[j]:
-                tmp = b[j-1]
-                b[j-1] = b[j]
+            if b[j - 1] > b[j]:
+                tmp = b[j - 1]
+                b[j - 1] = b[j]
                 b[j] = tmp
             j -= 1
         i += 1
@@ -105,27 +105,72 @@ def select_sort(b):
     return b
 
 
+def insert_sort(b):
+    """
+     3.  插入排序，将第一个元素当成有序序列，遍历第二个元素到最后一个元素，将每个元素插入有序序列的适当位置， 若插入的元素与有序序列中某个元素相等，则插入到该元素的后面
+      Select Sort: Sorts the array b in n^2 time
+
+      Parameter b: The sequence to sort
+      Precondition: b is a mutable sequence (e.g. a list).
+
+    """
+    for i in range(1, len(b)):
+        # ############ 方法一
+        # # 将该元素与有序序列进行比较插入，默认第一个元素为有序序列
+        # for j in range(i):
+        #     if i == 1:
+        #         if b[j] >= b[i]:
+        #             tmp = b[j]
+        #             b[j] = b[i]
+        #             b[i] = tmp
+        #     if b[j] <= b[i] <= b[j + 1]:
+        #         tmp = b[j + 1]
+        #         b[j + 1] = b[i]
+        #         b[i] = tmp
+        # ############ 方法二
+        j = i
+        tmp = b[i]  # 记录要插入的数据
+        while j > 0 and b[j-1] > tmp:  # 从右边开始比较插入
+            b[j] = b[j-1]
+            b[j-1] = tmp
+            j -= 1
+
+    return b
+
+
+def shell_sort(b):
+    pass
+
+
+
 def bubbleSort(arr):
     for i in range(1, len(arr)):
-        for j in range(0, len(arr)-i):
-            if arr[j] > arr[j+1]:
+        for j in range(0, len(arr) - i):
+            if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
 
 
-unsorted_list = [5, 0, 1, 9, 10, 2]
-sorted_list = buble_sort(unsorted_list)
-print('sorted_list:', sorted_list)
-select_list = select_sort(unsorted_list)
-print("sorted_list is {}".format(buble_sort(unsorted_list)))
-print("select_list is {}".format(select_list))
-print("bubbleSort is {}".format(bubbleSort(unsorted_list)))
-
-
+# ####################### 查找 #############
 bin_list = [0, 4, 7, 9, 11, 13, 20, 22, 26]
 ret_bin = binary_search(122, bin_list)
 print(ret_bin)
 ret = linear_search(0, [1, 2, 3])
 print('ret is {}'.format(ret))
+
+#  ####################### 排序 #############
+
+unsorted_list = [5, 0, 1, 9, 10, 2]
+# 1. 冒泡排序
+sorted_list = buble_sort(unsorted_list.copy())
+print('sorted_list:', sorted_list)
+# 2. 选择排序
+select_list = select_sort(unsorted_list.copy())
+print("select_list is {}".format(select_list))
+# 3. 插入排序
+insert_list = insert_sort(unsorted_list.copy())
+print("insert_list is {}".format(insert_list))
+
+
 
 
