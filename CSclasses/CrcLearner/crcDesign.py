@@ -111,7 +111,8 @@ def crc_check(input_bitstring, polynomial_bitstring, check_value):
     return ('1' not in ''.join(input_padded_array)[len_input:])
 
 
-a = bin(0x0C500008)
+# a = bin(0x0C500008)
+a = '1100010100000000000000001000'
 b = bin(int('0C500008', 16))
 # a = '1001100010100000000000000001'
 print('a', a)
@@ -119,3 +120,4 @@ print('b', b)
 value = crc_remainder(a, '1011', '0')
 check = crc_check(a, '1011', value)
 print(value, check)
+CRC_3(a)
