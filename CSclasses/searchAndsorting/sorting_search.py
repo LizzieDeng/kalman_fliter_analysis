@@ -166,6 +166,98 @@ def shell_sort(b):
     return b
 
 
+def merge(left, right):
+    new_array = []
+    if left and right:
+        for x, y in zip(left, right):
+            if x < y:
+                new_array.append(x)
+                new_array.append(y)
+            else:
+                new_array.append(y)
+                new_array.append(x)
+    if left and not right:
+        for _ in left:
+            new_array.append(_)
+    if right and not left:
+        for _ in right:
+            new_array.append(_)
+    return new_array
+
+
+# 5. 归并排序
+def mergesort(b):
+    """
+      5. 归并排序，将一组数据拆分成两个元素相等的子组，并对每一个子组继续拆分，直到拆分后的每个字组的元素个数为1为止，将相邻的两个子组合并成一个有序的大组
+      参考博客：https://blog.csdn.net/Pluto372/article/details/109895409
+       Select Sort: Sorts the array b in n^2 time
+
+       Parameter b: The sequence to sort
+       Precondition: b is a mutable sequence (e.g. a list).
+
+    """
+    # 递归拆分数组
+    middle = len(b) // 2
+    if len(b) < 2:
+        return b
+    left, right = b[0:middle], b[middle:]
+    # 合并排序
+    return merge(mergesort(left), mergesort(right))
+
+
+def partition(arr, left, right):
+    pivot = left
+    i = left + 1
+    # 先从右边开始遍历，遇到小于基准值的停下，遍历左边
+    while True:
+        # 先从右边开始遍历，遇到小于基准值的停下，遍历左边,直到遇到大于基准值的停下
+        while arr[right] > arr[pivot] and right > 0:
+            right -= 1
+        while arr[i] < arr[pivot] and i < right:
+            i += 1
+        if i >= right:
+            break
+        # 交换左边和右边下标的值
+        tmp = arr[i]
+        arr[i] = arr[right]
+        arr[right] = tmp
+    # 当左边和右边相遇时， 交换基准值和右边下标指向的值
+    t = arr[pivot]
+    arr[pivot] = arr[right]
+    arr[right] = t
+    return right
+
+
+# 6. 快速排序
+def quick_sort(b, left, right):
+    """
+    6. 快速排序，从数列中取出一个元素作为基准值，排列数列，将比该基准值小的排在前面，比其大的排在后面；递归地将左右两边子数列排序
+    参考博客：https://blog.csdn.net/weixin_45747339/article/details/109498409
+    Select Sort: Sorts the array b in n^2 time
+
+    Parameter b: The sequence to sort
+    Precondition: b is a mutable sequence (e.g. a list).
+    """
+    # 分区，
+    par_id = partition(b, left, right)
+    # 对左边子数列进行递归操作
+    quick_sort(b, left, par_id-1)
+    # 对右边子数列进行递归操作
+    quick_sort(b, par_id+1, right)
+    print("b")
+    return b
+
+
+def main_qsort(b):
+    left_id = 0
+    right_id = len(b) - 1
+    quick_sort(b, left_id, right_id)
+    return b
+
+
+
+
+
 def bubbleSort(arr):
     for i in range(1, len(arr)):
         for j in range(0, len(arr) - i):
@@ -196,7 +288,12 @@ print("insert_list is {}".format(insert_list))
 # 4. 希尔排序
 shell_list = shell_sort(unsorted_list.copy())
 print("shell_list is  {} ".format(shell_list))
-
+# 5. 归并排序
+merge_list = mergesort(unsorted_list.copy())
+print("merge_list is  {} ".format(merge_list))
+# 6. 快速排序
+quick_list = main_qsort(unsorted_list.copy())
+print("quick_list is  {} ".format(quick_list))
 
 
 
