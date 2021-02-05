@@ -239,13 +239,13 @@ def quick_sort(b, left, right):
     Precondition: b is a mutable sequence (e.g. a list).
     """
     # 分区，
-    par_id = partition(b, left, right)
-    # 对左边子数列进行递归操作
-    quick_sort(b, left, par_id-1)
-    # 对右边子数列进行递归操作
-    quick_sort(b, par_id+1, right)
-    print("b")
-    return b
+    if left < right:
+        par_id = partition(b, left, right)
+        # 对左边子数列进行递归操作
+        quick_sort(b, left, par_id-1)
+        # 对右边子数列进行递归操作
+        quick_sort(b, par_id+1, right)
+        return b
 
 
 def main_qsort(b):
@@ -255,8 +255,47 @@ def main_qsort(b):
     return b
 
 
+# 7. 堆排序
+def heap_sort():
+    """
+       7. 堆排序，从数列中取出一个元素作为基准值，排列数列，将比该基准值小的排在前面，比其大的排在后面；递归地将左右两边子数列排序
+       参考博客：https://blog.csdn.net/weixin_45747339/article/details/109498409
+       Select Sort: Sorts the array b in n^2 time
 
+       Parameter b: The sequence to sort
+       Precondition: b is a mutable sequence (e.g. a list).
+    """
 
+def buildMaxHeap(arr):
+    import math
+    for i in range(math.floor(len(arr)/2),-1,-1):
+        heapify(arr,i)
+
+def heapify(arr, i):
+    left = 2*i+1
+    right = 2*i+2
+    largest = i
+    if left < arrLen and arr[left] > arr[largest]:
+        largest = left
+    if right < arrLen and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        swap(arr, i, largest)
+        heapify(arr, largest)
+
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+
+def heapSort(arr):
+    global arrLen
+    arrLen = len(arr)
+    buildMaxHeap(arr)
+    for i in range(len(arr)-1,0,-1):
+        swap(arr,0,i)
+        arrLen -=1
+        heapify(arr, 0)
+    return arr
 
 def bubbleSort(arr):
     for i in range(1, len(arr)):
@@ -295,6 +334,4 @@ print("merge_list is  {} ".format(merge_list))
 quick_list = main_qsort(unsorted_list.copy())
 print("quick_list is  {} ".format(quick_list))
 
-
-
-
+heapSort(unsorted_list.copy())
